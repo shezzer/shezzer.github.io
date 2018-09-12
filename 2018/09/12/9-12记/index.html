@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="mysql分布式事务    1、Mysql的XA事务分为外部XA和内部XA        外部XA用于跨多MySQL实例的分布式事务，需要应用层作为协调者，通俗的说就是比如我们在PHP中写代码，    那么PHP书写的逻辑就是协调者。应用层负责决定提交还是回滚，崩溃时的悬挂事务。MySQL数据库外部XA可以用    在分布式数据库代理层，实现对MySQL数据库的分布式事务支持，例如开源的代理工具：">
+<meta name="description" content="Mysql积累 mysql分布式事务    1、Mysql的XA事务分为外部XA和内部XA        外部XA用于跨多MySQL实例的分布式事务，需要应用层作为协调者，通俗的说就是比如我们在PHP中写代码，    那么PHP书写的逻辑就是协调者。应用层负责决定提交还是回滚，崩溃时的悬挂事务。MySQL数据库外部XA可以用    在分布式数据库代理层，实现对MySQL数据库的分布式事务支持，例如">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://yoursite.com/2018/09/12/9-12记/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="mysql分布式事务    1、Mysql的XA事务分为外部XA和内部XA        外部XA用于跨多MySQL实例的分布式事务，需要应用层作为协调者，通俗的说就是比如我们在PHP中写代码，    那么PHP书写的逻辑就是协调者。应用层负责决定提交还是回滚，崩溃时的悬挂事务。MySQL数据库外部XA可以用    在分布式数据库代理层，实现对MySQL数据库的分布式事务支持，例如开源的代理工具：">
+<meta property="og:description" content="Mysql积累 mysql分布式事务    1、Mysql的XA事务分为外部XA和内部XA        外部XA用于跨多MySQL实例的分布式事务，需要应用层作为协调者，通俗的说就是比如我们在PHP中写代码，    那么PHP书写的逻辑就是协调者。应用层负责决定提交还是回滚，崩溃时的悬挂事务。MySQL数据库外部XA可以用    在分布式数据库代理层，实现对MySQL数据库的分布式事务支持，例如">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-12T09:11:28.000Z">
+<meta property="og:updated_time" content="2018-09-12T09:22:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="mysql分布式事务    1、Mysql的XA事务分为外部XA和内部XA        外部XA用于跨多MySQL实例的分布式事务，需要应用层作为协调者，通俗的说就是比如我们在PHP中写代码，    那么PHP书写的逻辑就是协调者。应用层负责决定提交还是回滚，崩溃时的悬挂事务。MySQL数据库外部XA可以用    在分布式数据库代理层，实现对MySQL数据库的分布式事务支持，例如开源的代理工具：">
+<meta name="twitter:description" content="Mysql积累 mysql分布式事务    1、Mysql的XA事务分为外部XA和内部XA        外部XA用于跨多MySQL实例的分布式事务，需要应用层作为协调者，通俗的说就是比如我们在PHP中写代码，    那么PHP书写的逻辑就是协调者。应用层负责决定提交还是回滚，崩溃时的悬挂事务。MySQL数据库外部XA可以用    在分布式数据库代理层，实现对MySQL数据库的分布式事务支持，例如">
 
 
 
@@ -309,7 +309,8 @@
       
 
       
-        <p>mysql分布式事务<br>    1、Mysql的XA事务分为外部XA和内部XA<br>        外部XA用于跨多MySQL实例的分布式事务，需要应用层作为协调者，通俗的说就是比如我们在PHP中写代码，<br>    那么PHP书写的逻辑就是协调者。应用层负责决定提交还是回滚，崩溃时的悬挂事务。MySQL数据库外部XA可以用<br>    在分布式数据库代理层，实现对MySQL数据库的分布式事务支持，例如开源的代理工具：网易的DDB，淘宝的TDDL等等。<br>        内部XA事务用于同一实例下跨多引擎事务，由Binlog作为协调者，比如在一个存储引擎提交时，需要将提交<br>    信息写入二进制日志，这就是一个分布式内部XA事务，只不过二进制日志的参与者是MySQL本身。Binlog作为内部<br>    XA的协调者，在binlog中出现的内部xid，在crash recover时，由binlog负责提交。(这是因为，binlog不进<br>    行prepare，只进行commit，因此在binlog中出现的内部xid，一定能够保证其在底层各存储引擎中已经完成prepare)。</p>
+        <p>Mysql积累</p>
+<p>mysql分布式事务<br>    1、Mysql的XA事务分为外部XA和内部XA<br>        外部XA用于跨多MySQL实例的分布式事务，需要应用层作为协调者，通俗的说就是比如我们在PHP中写代码，<br>    那么PHP书写的逻辑就是协调者。应用层负责决定提交还是回滚，崩溃时的悬挂事务。MySQL数据库外部XA可以用<br>    在分布式数据库代理层，实现对MySQL数据库的分布式事务支持，例如开源的代理工具：网易的DDB，淘宝的TDDL等等。<br>        内部XA事务用于同一实例下跨多引擎事务，由Binlog作为协调者，比如在一个存储引擎提交时，需要将提交<br>    信息写入二进制日志，这就是一个分布式内部XA事务，只不过二进制日志的参与者是MySQL本身。Binlog作为内部<br>    XA的协调者，在binlog中出现的内部xid，在crash recover时，由binlog负责提交。(这是因为，binlog不进<br>    行prepare，只进行commit，因此在binlog中出现的内部xid，一定能够保证其在底层各存储引擎中已经完成prepare)。</p>
 <p>Two Phase Commit Protocol<br>    分布式事务通常采用2PC协议，全称Two Phase Commitment Protocol。该协议主要为了解决在分布式数据库场景下，<br>所有节点间数据一致性的问题。在分布式事务环境下，事务的提交会变得相对比较复杂，因为多个节点的存在，可能存在部分节<br>点提交失败的情况，即事务的ACID特性需要在各个数据库实例中保证。总而言之，在分布式提交时，只要发生一个节点提交失败，<br>则所有的节点都不能提交，只有当所有节点都能提交时，整个分布式事务才允许被提交。</p>
 <p>分布式事务通过2PC协议将提交分成两个阶段<br>1、prepare；<br>2、commit/rollback<br>    第一阶段的prepare只是用来询问每个节点事务是否能提交，只有当得到所有节点的“许可”的情况下，第二阶段的commit才能<br>进行，否则就rollback。需要注意的是：prepare成功的事务，则必须全部提交。</p>
 <h2 id="比较零散，为平日积累所得"><a href="#比较零散，为平日积累所得" class="headerlink" title="比较零散，为平日积累所得"></a>比较零散，为平日积累所得</h2><p>title: 9.12记<br>date: 2018-09-12 17:09:24</p>
