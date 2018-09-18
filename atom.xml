@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="www.shezzer.cn/"/>
-  <updated>2018-09-15T15:49:08.000Z</updated>
+  <updated>2018-09-18T13:18:59.000Z</updated>
   <id>www.shezzer.cn/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mysql索引及优化</title>
+    <link href="www.shezzer.cn/2018/09/18/mysql%E7%B4%A2%E5%BC%95%E5%8F%8A%E4%BC%98%E5%8C%96/"/>
+    <id>www.shezzer.cn/2018/09/18/mysql索引及优化/</id>
+    <published>2018-09-18T13:14:42.000Z</published>
+    <updated>2018-09-18T13:18:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>聚簇索引:表记录的物理理存储顺序与索引顺序⼀一致，且索引的叶⼦子节点就是数据节点<br>非聚簇索引:表记录的物理理存储顺序与索引顺序⽆无关，叶节点包含索引键值以及指向对应数据块的指针(因存储引擎⽽而异)</p><img src="/2018/09/18/mysql索引及优化/聚簇索引和非聚簇索引.png" title="聚簇索引和非聚簇索引"><p>聚簇索引：</p><p>1、提升io密集型应用性能</p><p>2、Row的移动不影响二级索引</p><p>3、Innodb二级索引相对较大</p><p>4、Innodb二级索引需要检索两次B+树</p><p>5、如果主键值随机，在插⼊入记录或更更新主键时，可能造成记录移动或⻚页分裂，影响性能</p><p>非聚簇索引</p><p>1、索引与数据分离，索引所占空间小</p><p>2、Row的移动影响索引</p><p>3、随机io</p><p>建议建立索引的列</p><p><strong>WHERE, JOIN , GROUP BY, ORDER BY</strong> 等语句使用的列</p><p>利利⽤用最左前缀<br>(A,B,C): A, AB, AC,ABC,B,C,BC</p><p>如何选择索引列的顺序</p><p>\1. 经常被使⽤用到的列优先</p><p>✓ 利用最左前缀，尽量复用已有索引</p><p>\2. 区分度⼤的列优先<br>​    ✓ 区分度 = distinct(col) / count(col) ， distinct(col) 即cardinality，至少大于0.1</p><p>✓ 尽快排除掉更多的记录</p><p>\3. 宽度小的列优先<br>​    ✓ 列宽度 = 列的数据类型</p><p>✓ 宽度越小，单节点的key值越多，索引树的高度越低，查询复杂度越低</p><p>如何优化索引</p><p> type:连接的类型（type越靠前越好）<br>​    1、 const，system：最多一个匹配行，使用主键或者unique索引</p><p>​    2、eq_ref：返回一行数据，通常在联接时出现，使用主键或者unique索引</p><p>​    3、ref：使用key的最左前缀，且key不是主键或unique键</p><p>​    4、range：索引范围扫描，对索引的扫描开始于某一点，返回匹配的行</p><p>​    5、index：以索引的顺序进行全表扫描，优点是不用排序，缺点是还要全表扫描</p><p>​    6、all：全表扫描，必须避免</p><p>extra：（后面两种情况不允许出现）</p><p>​    1、using index : 索引覆盖，只用到索引，可以避免访问表</p><p>​    2、using where: 在存储引擎返回记录后再做过滤</p><p>​    3、using temporary:使用临时表，通常在使用group by和order by时出现</p><p>​    4、using filesort： 用到非索引排序的额外排序，当order by未用到索引时发生</p><p>explain分析：</p><p>key（优化其决定采用哪个索引来优化对该表的访问）不能为null</p><p>rows（mysql估算为了找到所需行而要检索的行数，作为优化器选择key的参考）越小越好</p><p>key_len（使用索引左前缀的长度（bytes），亦可理解为使用了索引中哪些字段）不影响索引精度的情况下，越小越好</p><p>*    定长字段: int占4个字节、date占3个字节、timestamp占4个字节，</p><p>char(n) 需要 [n <em> 编码字符所占字节]，如utf8编码，则长度为 n </em> 3 个字节</p><p>ALLOW NULL的字段:需要加1个字节来标记是否为NULL</p><p>变长字段varchar(n):需要 [n * 编码字符所占字节数 + 2 ]个字节，额外的2字节用于记录长度</p><p>索引优化思路：</p><img src="/2018/09/18/mysql索引及优化/索引优化.svg" title="索引优化思路">]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;聚簇索引:表记录的物理理存储顺序与索引顺序⼀一致，且索引的叶⼦子节点就是数据节点&lt;br&gt;非聚簇索引:表记录的物理理存储顺序与索引顺序⽆无关，叶节点包含索引键值以及指向对应数据块的指针(因存储引擎⽽而异)&lt;/p&gt;
+&lt;img src=&quot;/2018/09/18/mysql索引及优
+      
+    
+    </summary>
+    
+    
+      <category term="mysql" scheme="www.shezzer.cn/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>mysql分布式事务</title>
